@@ -15,19 +15,14 @@ class CardDetail extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        child: CustomScrollView(
-          slivers: [
-            _sliverAppBar(tarjeta),
-
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  // Detalle de servicio
-                  _cardService(tarjeta)
-                ]
-              )
-            )
-          ]
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerIsScroolled) {
+            return <Widget> [
+              _sliverAppBar(tarjeta),
+            ];
+          },            
+          body: _cardService(tarjeta)
         )
       ),
     );
@@ -42,16 +37,18 @@ class CardDetail extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.active:
             case ConnectionState.done:
-              return ListView(
-                padding: EdgeInsets.only(
-                  top: 10,
-                  bottom: 20
+              return Container(
+                child: ListView(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 20
+                  ),
+                  children: snapshot.data.map<Widget>( (result) {
+                    return Container(
+                      child: CardServiceWidget(serviceCard: result),
+                    );
+                  }).toList(),
                 ),
-                children: snapshot.data.map<Widget>( (result) {
-                  return Container(
-                    child: CardServiceWidget(serviceCard: result),
-                  );
-                }).toList(),
               );
               break;
             default:
@@ -65,7 +62,7 @@ class CardDetail extends StatelessWidget {
   SliverAppBar _sliverAppBar(Cards tarjeta) {
     return SliverAppBar(
       backgroundColor: Colors.deepPurple,
-      expandedHeight: 200,
+      expandedHeight: 250,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
@@ -77,7 +74,7 @@ class CardDetail extends StatelessWidget {
         background: Hero(
           tag: tarjeta.id,
           child: FadeInImage(
-            placeholder: AssetImage('assets/images/jar-loading.gif'),
+            placeholder: AssetImage('assets/images/loading.gif'),
             image: NetworkImage(tarjeta.getImg()),
             fadeInDuration: Duration(milliseconds: 150),
             fit: BoxFit.cover

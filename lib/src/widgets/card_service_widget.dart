@@ -33,7 +33,7 @@ class CardServiceWidget extends StatelessWidget {
             ),
             child: FadeInImage(
               image: NetworkImage(serviceCard.getImg()),
-              placeholder: AssetImage('assets/images/jar-loading.gif'),
+              placeholder: AssetImage('assets/images/loading.gif'),
               height: 300.0,
               fit: BoxFit.cover,
             ),

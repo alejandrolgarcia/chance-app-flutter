@@ -11,8 +11,6 @@ class ServiceProvider{
   Future<List<Service>> getServiceByUser(String idUser) async {
     final url = Uri.https(_url, '/service/$idUser');
 
-    print(url);
-
     final response = await http.get(url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -21,7 +19,6 @@ class ServiceProvider{
 
     final data = json.decode( response.body );
     final services = new Results.fromJsonList(data['service']);
-    print(services.items);
     return services.items;
   }
 
