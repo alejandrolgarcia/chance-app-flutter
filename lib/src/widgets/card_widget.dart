@@ -11,20 +11,21 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
-        children: _cards(),
+        children: _cards(context),
       ),
     );
   }
 
-  List<Widget> _cards () {
+  List<Widget> _cards (BuildContext context) {
     return tarjetas.map( ( tarjeta ) {
       return Card(
         elevation: 5.0,
         margin: EdgeInsets.all(10),
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10)
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20)
           ),
           child: Column(
             children: [
@@ -43,6 +44,10 @@ class CardWidget extends StatelessWidget {
                         onPressed: (){},
                       ),
                       IconButton(
+                        icon: Icon(Icons.share),
+                        onPressed: (){},
+                      ),
+                      IconButton(
                         icon: Icon(Icons.more_vert),
                         onPressed: (){},
                       )
@@ -50,32 +55,38 @@ class CardWidget extends StatelessWidget {
                   )
                 ]
               ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(tarjeta.getImg()),
-                  ),
-                  SizedBox(width: 10),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${tarjeta.user.firstname} ${tarjeta.user.lastname}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 5),
-                        Text(tarjeta.phone),
-                        Text(tarjeta.email),
-                        Text(tarjeta.address),
-                        Text(tarjeta.website),
-                        SizedBox(height: 5),
-                        Text(tarjeta.slogan)
-                      ],
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'detail', arguments: tarjeta),
+                child: Row(
+                  children: [
+                    Hero(
+                      tag: tarjeta.id,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(tarjeta.getImg()),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${tarjeta.user.firstname} ${tarjeta.user.lastname}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 5),
+                          Text(tarjeta.phone),
+                          Text(tarjeta.email),
+                          Text(tarjeta.address),
+                          Text(tarjeta.website),
+                          SizedBox(height: 5),
+                          Text(tarjeta.slogan)
+                        ],
+                      )
                     )
-                  )
-                ],
+                  ],
+                ),
               )
             ]
           )

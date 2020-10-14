@@ -50,7 +50,7 @@ class Cards {
 
     score      = json['score'];
     status     = json['status'];
-    id         = json['id'];
+    id         = json['_id'];
     user       = User.fromJsonMap(json['user']);
     profession = json['profession'];
     phone      = json['phone'];
@@ -86,7 +86,7 @@ class User {
   });
 
   User.fromJsonMap(Map<String, dynamic> json) {
-    id        = json['id'];
+    id        = json['_id'];
     firstname = json['firstname'];
     lastname  = json['lastname'];
     img       = json['img'];

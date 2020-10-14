@@ -1,3 +1,4 @@
+import 'package:chance_app/src/screens/detail_screen.dart';
 import 'package:chance_app/src/screens/home_screen.dart';
 import 'package:flutter/material.dart';
  
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'Chance App',
       initialRoute: 'home',
       routes: {
-        'home': ( BuildContext context ) => HomeScreen()
+        'home': ( BuildContext context ) => HomeScreen(),
+        'detail': ( BuildContext context ) => CardDetail()
       },
     );
   }
